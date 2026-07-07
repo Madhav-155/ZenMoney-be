@@ -1,15 +1,16 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const connectionString = process.env.LOCAL_DB_URL;
+const connectionString = process.env.DATABASE_URL || process.env.LOCAL_DB_URL;
 
 if (!connectionString) {
-  console.error("Error: LOCAL_DB_URL environment variable is not defined.");
+  console.error("Error: DATABASE_URL or LOCAL_DB_URL environment variable is not defined.");
   process.exit(1);
 }
 
 const pool = new Pool({
   connectionString,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 const initializeDatabase = async () => {
