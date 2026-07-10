@@ -250,7 +250,7 @@ app.get('/api/:table', authenticateToken, async (req, res) => {
   const { userId, limit } = req.query;
 
   // Protect against SQL injection by checking allowed tables
-  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs'];
+  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs', 'owed_people'];
   if (!allowedTables.includes(table)) {
     return res.status(400).json({ message: 'Invalid table name' });
   }
@@ -290,7 +290,7 @@ app.get('/api/:table', authenticateToken, async (req, res) => {
 // POST /api/:table
 app.post('/api/:table', authenticateToken, async (req, res) => {
   const { table } = req.params;
-  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs'];
+  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs', 'owed_people'];
   if (!allowedTables.includes(table)) {
     return res.status(400).json({ message: 'Invalid table name' });
   }
@@ -332,7 +332,7 @@ app.post('/api/:table', authenticateToken, async (req, res) => {
 // PUT /api/:table/:id or PUT /api/:table
 app.put(['/api/:table', '/api/:table/:id'], authenticateToken, async (req, res) => {
   const { table, id } = req.params;
-  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs'];
+  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs', 'owed_people'];
   if (!allowedTables.includes(table)) {
     return res.status(400).json({ message: 'Invalid table name' });
   }
@@ -367,7 +367,7 @@ app.put(['/api/:table', '/api/:table/:id'], authenticateToken, async (req, res) 
 // DELETE /api/:table/:id
 app.delete('/api/:table/:id', authenticateToken, async (req, res) => {
   const { table, id } = req.params;
-  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs'];
+  const allowedTables = ['profiles', 'groups', 'group_members', 'transactions', 'subscriptions', 'report_threads', 'report_runs', 'owed_people'];
   if (!allowedTables.includes(table)) {
     return res.status(400).json({ message: 'Invalid table name' });
   }
