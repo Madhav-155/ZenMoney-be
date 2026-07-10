@@ -102,6 +102,21 @@ const initializeDatabase = async () => {
       );
     `);
 
+    // Create owed_people table
+    try {
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS public.owed_people (
+          id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+          user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+          name TEXT NOT NULL,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+          UNIQUE(user_id, name)
+        );
+      `);
+    } catch (e) {
+      if (e.code !== '23505') throw e;
+    }
+
     // Create report threads table
     await client.query(`
       CREATE TABLE IF NOT EXISTS public.report_threads (
